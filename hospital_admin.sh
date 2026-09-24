@@ -15,6 +15,7 @@ initialize_system() {
             mkdir -p "$dir"
         fi
     done
+    echo "Environment initialization complete."
 }
 
 secure_data() {
