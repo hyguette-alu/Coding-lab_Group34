@@ -7,7 +7,7 @@ Shell tooling around `hospital_system.py` to secure and analyze data from 12 hos
 |---|---|---|---|
 | 1 | IMFURA Murinda Hyguette | The Architect | `initialize_system()` |
 | 2 | NGABO Iris | The Security Lead | `secure_data()` |
-| 3 | | The Orchestrator | main logic in `hospital_admin.sh` |
+| 3 | FARAH ISSE | The Orchestrator | main logic in `hospital_admin.sh` |
 | 4 | | The Archivist | `hospital_archive.sh` |
 | 5 | | Clinical Analyst | `process_vitals()` |
 | 6 | | Facility Auditor | `water_audit()` |
