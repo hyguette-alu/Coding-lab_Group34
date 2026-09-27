@@ -40,24 +40,33 @@ secure_data() {
     ls -l "$ACTIVE_DIR"
     echo
 }
-# ============================================================
+# ==================================================
 # Member 3 (The Orchestrator) - Master Orchestration Logic
-# ============================================================
+# ==================================================
+#
+# main() runs the setup pipeline in order:
+#   1. initialize_system - creates active_logs, archived_logs, reports
+#   2. secure_data        - locks down permissions on active_logs
+# If either step fails, the script stops immediately instead of
+# printing a false "Secured" message.
 
 main() {
-    initialize_system
-    secure_data
+    if ! initialize_system; then
+        echo "ERROR: initialize_system failed. Aborting." >&2
+        exit 1
+    fi
+
+    if ! secure_data; then
+        echo "ERROR: secure_data failed. Aborting." >&2
+        exit 1
+    fi
 
     local CURRENT_DATE
     CURRENT_DATE="$(date +"%Y-%m-%d %H:%M:%S")"
 
-    echo "=============================================="
+    echo "================================================="
     echo "System Environment Secured - ${CURRENT_DATE}"
-    echo "=============================================="
+    echo "================================================="
 }
 
 main "$@"
-
-# ============================================================
-# End of Member 3 (The Orchestrator) Block
-# ============================================================
