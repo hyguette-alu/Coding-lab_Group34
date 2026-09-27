@@ -1,5 +1,5 @@
 #!/bin/bash
-# Member 1 - Clinical Analyst  
+# Member 5 - Clinical Analyst  
 # Check if the critical alerts file does not exist
 if [ ! -f reports/critical_alerts.txt ]; then
 
