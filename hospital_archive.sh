@@ -15,7 +15,7 @@ archive_logs() {
     local archived_any=false
 
     for log_file in "$ACTIVE_DIR"/*.log; do
-        if [ -f "$log_file" ]; then
+        if [ -s "$log_file" ]; then
             base_name=$(basename "$log_file" .log)
             base_name="${base_name%_log}"
             mv "$log_file" "$ARCHIVE_DIR/${base_name}_${timestamp}.log"
