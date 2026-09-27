@@ -40,3 +40,24 @@ secure_data() {
     ls -l "$ACTIVE_DIR"
     echo
 }
+# ============================================================
+# Member 3 (The Orchestrator) - Master Orchestration Logic
+# ============================================================
+
+main() {
+    initialize_system
+    secure_data
+
+    local CURRENT_DATE
+    CURRENT_DATE="$(date +"%Y-%m-%d %H:%M:%S")"
+
+    echo "=============================================="
+    echo "System Environment Secured - ${CURRENT_DATE}"
+    echo "=============================================="
+}
+
+main "$@"
+
+# ============================================================
+# End of Member 3 (The Orchestrator) Block
+# ============================================================
