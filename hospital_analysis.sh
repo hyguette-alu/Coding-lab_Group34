@@ -18,3 +18,4 @@ process_heart_vitals() {
 
 # Run the function
 process_heart_vitals
+#program running
