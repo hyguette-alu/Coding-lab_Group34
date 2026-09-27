@@ -1,19 +1,22 @@
 #!/bin/bash
 # Member 5 - Clinical Analyst
-# Check if the critical alerts file does not exist
-if [ ! -f reports/critical_alerts.txt ]; then
 
-    # Create the critical alerts file
-    touch reports/critical_alerts.txt
-fi
+mkdir -p reports
 
-process_heart_vitals() {
+process_vitals() {
 
-    # Find CRITICAL records in the heart rate and temperature logs
+    # Rewrite the report on every run. Appending repeated every old alert
+    : > reports/critical_alerts.txt
+
+    # Find CRITICAL records in the heart rate and temperature logs.
     grep -h "CRITICAL" active_logs/heart_rate_log.log active_logs/temperature_log.log |
 
-    # Extract Timestamp, Device_ID, and Value, then save to the report file
-    awk -F '|' '{print $1 " | " $2 " | " $3}' >> reports/critical_alerts.txt
+    awk -F '|' '{
+        for (i = 1; i <= 3; i++) {
+            gsub(/^[ \t]+|[ \t]+$/, "", $i)
+        }
+        print $1 " | " $2 " | " $3
+    }' > reports/critical_alerts.txt
 }
 
 # =========================================
@@ -43,5 +46,5 @@ water_audit() {
 }
 
 # Execute Functions
-process_heart_vitals
+process_vitals
 water_audit
