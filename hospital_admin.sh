@@ -33,18 +33,26 @@ secure_data() {
     # account on this machine cannot list or enter the medical logs.
     chmod 700 "$ACTIVE_DIR"
 
-    # 600: owner read and write only on each log file. Logs do not need
-    # execute permission. The loop no-ops when no .log files exist yet,
-    # because an unmatched glob is not a real file.
+    # Locking the directory is not enough. Each log keeps its own mode,
+    # so a file created as 644 would still be readable by every account.
+    # 600 means owner read/write only. A log is data, not a program, so
+    # it does not get execute permission. Group and others get none.
+    # Keep the directory name quoted and let *.log expand. If no logs
+    # exist yet, the pattern is not a real path and the test below skips it.
     local log_file
     for log_file in "$ACTIVE_DIR"/*.log; do
+        # Skip the unmatched glob. chmod must run only on a real log file.
         if [ -f "$log_file" ]; then
             chmod 600 "$log_file"
         fi
     done
 
+    # Say the lockdown finished, then show the bits. ls -l prints modes
+    # such as drwx------ for the folder and -rw------- for each log, so
+    # the operator can confirm group and others have no access.
     echo "Permissions applied. Current state of $ACTIVE_DIR:"
     ls -l "$ACTIVE_DIR"
+    # Separate this report from whatever the script prints next.
     echo
 }
 # ============================================================
